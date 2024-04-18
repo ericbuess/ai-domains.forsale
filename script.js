@@ -3,6 +3,51 @@ document.addEventListener("DOMContentLoaded", () => {
   const domainList = document.querySelector(".domain-list");
   const sortSelect = document.querySelector(".sort-select");
   const searchInput = document.querySelector(".search-input");
+  const tldSection = document.querySelector(".tld-section");
+  const manualTlds = [
+    "ai",
+    "com",
+    "app",
+    "io",
+    "tech",
+    "chat",
+    "codes",
+    "technology",
+    "dev",
+    "expert",
+    "consulting",
+    "pro",
+    "tips",
+    "guide",
+    "blog",
+    "news",
+    "cloud",
+    "online",
+    "data",
+    "software",
+    "systems",
+    "engineering",
+    "solutions",
+    "academy",
+    "camp",
+    "courses",
+    "how",
+    "space",
+    "ninja",
+    "me",
+    "run",
+    "observer",
+    "store",
+    "games",
+    "productions",
+    "gallery",
+    "reviews",
+    "university",
+    "builders",
+    "contractors",
+    "online",
+    "solutions",
+  ];
 
   fetch("domains.json")
     .then((response) => response.json())
@@ -132,6 +177,60 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("featured-domains");
         featuredDomainsSection.scrollIntoView({ behavior: "smooth" });
       });
+
+      // Read the tlds.txt file and create clickable tags
+      fetch("tlds.txt")
+        .then((response) => response.text())
+        .then((data) => {
+          const tlds = data.split("\n");
+          const tldTags = document.getElementById("tld-tags");
+
+          manualTlds.forEach((tld) => {
+            const tag = document.createElement("span");
+            tag.classList.add("tld-tag");
+            tag.textContent = tld;
+            tag.addEventListener("click", () => {
+              tag.classList.toggle("selected");
+              filterDomains();
+            });
+            tldTags.appendChild(tag);
+          });
+
+          const otherTag = document.createElement("span");
+          otherTag.classList.add("tld-tag");
+          otherTag.textContent = "Other";
+          otherTag.addEventListener("click", () => {
+            otherTag.classList.toggle("selected");
+            filterDomains();
+          });
+          tldTags.appendChild(otherTag);
+        });
+      function filterDomains() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedTlds = Array.from(
+          document.querySelectorAll(".tld-tag.selected")
+        ).map((tag) => tag.textContent);
+        const isOtherSelected = selectedTlds.includes("Other");
+
+        // Adjusting how domains are filtered based on the TLD and search term.
+        domains = data.filter((domain) => {
+          const domainTld = domain.name.split(".").pop(); // Extracts the TLD from the domain name.
+          const isSearchMatch = domain.name.toLowerCase().includes(searchTerm); // Checks if the domain name includes the search term.
+
+          // Determines if the TLD of the domain matches any selected TLD tags, or the 'Other' tag is selected and the TLD is not in manualTlds.
+          const isTldMatch =
+            selectedTlds.length === 0 ||
+            selectedTlds.includes(domainTld) ||
+            (isOtherSelected && !manualTlds.includes(domainTld));
+
+          return isSearchMatch && isTldMatch;
+        });
+
+        renderDomainCards(); // Updates the display of domains.
+
+        // Optionally, hide or show the TLD section based on the presence of domains.
+        tldSection.style.display = domains.length === 0 ? "none" : "block";
+      }
 
       renderDomainCards();
     })
