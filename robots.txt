@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://gptprime.ai/sitemap.xml
+Sitemap: https://ai-domains.forsale/sitemap.xml
