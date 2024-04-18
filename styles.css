@@ -124,6 +124,13 @@ h2 {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;  /* Ensures spacing and pushes actions to bottom */
+}
+
+.actions-container {
+  margin-top: auto;  /* This pushes the container to the bottom */
 }
 
 .domain-name {

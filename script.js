@@ -95,36 +95,43 @@ document.addEventListener("DOMContentLoaded", () => {
           domainPrice.appendChild(currentPriceElement);
           domainCard.appendChild(domainPrice);
 
-          // Remaining elements (blurb, links, etc.)
           const domainBlurb = document.createElement("p");
           domainBlurb.classList.add("domain-blurb");
           domainBlurb.textContent = domain.blurb;
           domainCard.appendChild(domainBlurb);
 
+          // Actions container
+          const actionsContainer = document.createElement("div");
+          actionsContainer.classList.add("actions-container");
+
+          // Buy Now link
           const buyNowLink = document.createElement("a");
           buyNowLink.classList.add("buy-now-link");
           buyNowLink.href = `https://${domain.name}`;
           buyNowLink.target = "_blank";
           buyNowLink.textContent = "Buy Now";
-          domainCard.appendChild(buyNowLink);
+          actionsContainer.appendChild(buyNowLink);
 
+          // Make Offer link
           if (domain.minOffer) {
             const makeOfferLink = document.createElement("a");
             makeOfferLink.classList.add("make-offer-link");
             makeOfferLink.href = `https://${domain.name}`;
             makeOfferLink.target = "_blank";
             makeOfferLink.textContent = "Make an Offer";
-            domainCard.appendChild(makeOfferLink);
+            actionsContainer.appendChild(makeOfferLink);
           }
 
+          // Share button
           const shareButton = document.createElement("button");
           shareButton.classList.add("share-button");
           shareButton.textContent = "Share";
           shareButton.addEventListener("click", () => {
             openShareModal(domain.name);
           });
-          domainCard.appendChild(shareButton);
+          actionsContainer.appendChild(shareButton);
 
+          domainCard.appendChild(actionsContainer);
           domainList.appendChild(domainCard);
         });
       }
