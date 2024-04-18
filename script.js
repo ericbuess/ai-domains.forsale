@@ -66,16 +66,36 @@ document.addEventListener("DOMContentLoaded", () => {
           domainName.textContent = domain.name;
           domainCard.appendChild(domainName);
 
+          // Calculate original price
+          const originalPrice = parseFloat(domain.price) * 1.75;
+          const formattedOriginalPrice = originalPrice.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          });
+
+          // Current price
           const price = parseFloat(domain.price);
           const formattedPrice = price.toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
           });
-          const domainPrice = document.createElement("p");
-          domainPrice.classList.add("domain-price");
-          domainPrice.textContent = formattedPrice;
+
+          const domainPrice = document.createElement("div");
+          domainPrice.classList.add("domain-price-container");
+
+          const originalPriceElement = document.createElement("span");
+          originalPriceElement.classList.add("original-price");
+          originalPriceElement.textContent = formattedOriginalPrice;
+
+          const currentPriceElement = document.createElement("span");
+          currentPriceElement.classList.add("current-price");
+          currentPriceElement.textContent = formattedPrice;
+
+          domainPrice.appendChild(originalPriceElement);
+          domainPrice.appendChild(currentPriceElement);
           domainCard.appendChild(domainPrice);
 
+          // Remaining elements (blurb, links, etc.)
           const domainBlurb = document.createElement("p");
           domainBlurb.classList.add("domain-blurb");
           domainBlurb.textContent = domain.blurb;

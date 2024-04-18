@@ -131,6 +131,23 @@ h2 {
   margin-bottom: 10px;
 }
 
+.domain-price-container {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 16px;
+}
+
+.current-price {
+  color: #0070C0;
+  font-size: 18px;
+}
+
 .domain-price {
   font-size: 18px;
   color: #0070C0;
