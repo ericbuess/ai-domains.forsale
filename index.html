@@ -25,19 +25,44 @@
           indefinitely.
         </p>
       </section>
-      <a href="#" target="_blank" class="cta-button"
+      <a href="#featured-domains" class="cta-button"
         >Discover Your Perfect AI Domain</a
       >
     </header>
 
     <div class="container">
-      <h2>Featured AI Domains</h2>
-      <select class="sort-select">
-        <option value="price">Sort by Price</option>
-        <option value="name">Sort by Name</option>
-      </select>
-      <input type="text" class="search-input" placeholder="Search domains..." />
+      <h2 id="featured-domains">Featured AI Domains</h2>
+      <div class="filter-sort">
+        <select class="sort-select">
+          <option value="name">Sort by Name</option>
+          <option value="price">Sort by Price</option>
+        </select>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search domains..."
+        />
+      </div>
       <div class="domain-list"></div>
+    </div>
+
+    <div id="share-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Share Domain</h3>
+        <p>Share this domain on:</p>
+        <ul class="share-options">
+          <li><a href="#" target="_blank" class="share-twitter">Twitter</a></li>
+          <li>
+            <a href="#" target="_blank" class="share-facebook">Facebook</a>
+          </li>
+          <li>
+            <a href="#" target="_blank" class="share-linkedin">LinkedIn</a>
+          </li>
+        </ul>
+        <input type="text" id="share-link" readonly />
+        <button id="copy-link">Copy Link</button>
+      </div>
     </div>
 
     <script src="script.js"></script>

@@ -21,9 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
           domainName.textContent = domain.name;
           domainCard.appendChild(domainName);
 
+          const price = parseFloat(domain.price);
+          const formattedPrice = price.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          });
           const domainPrice = document.createElement("p");
           domainPrice.classList.add("domain-price");
-          domainPrice.textContent = `$${domain.price}`;
+          domainPrice.textContent = formattedPrice;
           domainCard.appendChild(domainPrice);
 
           const domainBlurb = document.createElement("p");
@@ -31,10 +36,18 @@ document.addEventListener("DOMContentLoaded", () => {
           domainBlurb.textContent = domain.blurb;
           domainCard.appendChild(domainBlurb);
 
+          const buyNowLink = document.createElement("a");
+          buyNowLink.classList.add("buy-now-link");
+          buyNowLink.href = `https://${domain.name}`;
+          buyNowLink.target = "_blank";
+          buyNowLink.textContent = "Buy Now";
+          domainCard.appendChild(buyNowLink);
+
           if (domain.minOffer) {
             const makeOfferLink = document.createElement("a");
             makeOfferLink.classList.add("make-offer-link");
-            makeOfferLink.href = `https://example.com/offer?domain=${domain.name}&min_offer=${domain.minOffer}`;
+            makeOfferLink.href = `https://${domain.name}`;
+            makeOfferLink.target = "_blank";
             makeOfferLink.textContent = "Make an Offer";
             domainCard.appendChild(makeOfferLink);
           }
@@ -43,13 +56,52 @@ document.addEventListener("DOMContentLoaded", () => {
           shareButton.classList.add("share-button");
           shareButton.textContent = "Share";
           shareButton.addEventListener("click", () => {
-            // Implement share functionality here
-            alert(`Sharing domain: ${domain.name}`);
+            openShareModal(domain.name);
           });
           domainCard.appendChild(shareButton);
 
           domainList.appendChild(domainCard);
         });
+      }
+
+      function openShareModal(domainName) {
+        const shareModal = document.getElementById("share-modal");
+        const shareLink = document.getElementById("share-link");
+        const copyLink = document.getElementById("copy-link");
+        const closeButton = document.querySelector(".close");
+        const shareTwitter = document.querySelector(".share-twitter");
+        const shareFacebook = document.querySelector(".share-facebook");
+        const shareLinkedIn = document.querySelector(".share-linkedin");
+
+        const shareUrl = `https://${domainName}`;
+        const encodedShareUrl = encodeURIComponent(shareUrl);
+        const shareText = encodeURIComponent(
+          "Check out this AI domain for sale: "
+        );
+
+        shareTwitter.href = `https://twitter.com/intent/tweet?text=${shareText}&url=${encodedShareUrl}`;
+        shareFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`;
+        shareLinkedIn.href = `https://www.linkedin.com/shareArticle?mini=true&url=${encodedShareUrl}`;
+
+        shareLink.value = shareUrl;
+
+        shareModal.style.display = "block";
+
+        closeButton.onclick = () => {
+          shareModal.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+          if (event.target === shareModal) {
+            shareModal.style.display = "none";
+          }
+        };
+
+        copyLink.onclick = () => {
+          shareLink.select();
+          document.execCommand("copy");
+          alert("Link copied to clipboard!");
+        };
       }
 
       function sortDomains() {
@@ -72,6 +124,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       sortSelect.addEventListener("change", sortDomains);
       searchInput.addEventListener("input", searchDomains);
+
+      const ctaButton = document.querySelector(".cta-button");
+      ctaButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const featuredDomainsSection =
+          document.getElementById("featured-domains");
+        featuredDomainsSection.scrollIntoView({ behavior: "smooth" });
+      });
 
       renderDomainCards();
     })
