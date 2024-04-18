@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
           domainCard.appendChild(domainName);
 
           // Calculate original price
-          const originalPrice = parseFloat(domain.price) * 1.75;
+          const originalPrice = parseFloat(domain.price) * 2.07;
           const formattedOriginalPrice = originalPrice.toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
