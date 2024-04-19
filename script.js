@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "com",
     "app",
     "io",
-    "tech",
     "chat",
     "codes",
     "technology",
@@ -34,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "how",
     "space",
     "ninja",
-    "me",
     "run",
     "observer",
     "store",
@@ -47,6 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "contractors",
     "online",
     "solutions",
+    "guru",
+    "studio",
+    "coach",
+    "health",
   ];
 
   fetch("domains.json")
