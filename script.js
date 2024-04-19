@@ -69,6 +69,12 @@ document.addEventListener("DOMContentLoaded", () => {
           buyNowLink.href = `https://${domain.name}`;
           buyNowLink.target = "_blank";
           buyNowLink.textContent = "Buy Now";
+          if (domain.inUse) {
+            buyNowLink.addEventListener("click", (event) => {
+              event.preventDefault();
+              openInUseModal(domain.name);
+            });
+          }
           actionsContainer.appendChild(buyNowLink);
 
           // Make Offer link
@@ -78,6 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
             makeOfferLink.href = `https://${domain.name}`;
             makeOfferLink.target = "_blank";
             makeOfferLink.textContent = "Make an Offer";
+            if (domain.inUse) {
+              makeOfferLink.addEventListener("click", (event) => {
+                event.preventDefault();
+                openInUseModal(domain.name);
+              });
+            }
             actionsContainer.appendChild(makeOfferLink);
           }
 
@@ -95,6 +107,52 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         updateDomainCount();
+      }
+
+      function openInUseModal(domainName) {
+        const inUseModal = document.createElement("div");
+        inUseModal.classList.add("modal");
+
+        const modalContent = document.createElement("div");
+        modalContent.classList.add("modal-content");
+        inUseModal.appendChild(modalContent);
+
+        const closeButton = document.createElement("span");
+        closeButton.classList.add("close");
+        closeButton.innerHTML = "&times;";
+        closeButton.addEventListener("click", () => {
+          inUseModal.style.display = "none";
+        });
+        modalContent.appendChild(closeButton);
+
+        const heading = document.createElement("h3");
+        heading.textContent = "Domain In Use";
+        modalContent.appendChild(heading);
+
+        const message = document.createElement("p");
+        message.textContent = `The domain ${domainName} is currently in use but is available for purchase. Please reach out using the links below if you are interested in purchasing this domain.`;
+        modalContent.appendChild(message);
+
+        const domainLink = document.createElement("a");
+        domainLink.href = `https://${domainName}`;
+        domainLink.target = "_blank";
+        domainLink.textContent = "Visit Domain";
+        modalContent.appendChild(domainLink);
+
+        const socialLinksHeading = document.createElement("p");
+        socialLinksHeading.textContent = "Reach out on:";
+        modalContent.appendChild(socialLinksHeading);
+
+        const socialLinks = document.createElement("ul");
+        socialLinks.classList.add("share-options");
+        socialLinks.innerHTML = `
+          <li><a href="https://x.com/ericbuess" target="_blank">X/Twitter</a></li>
+          <li><a href="https://www.linkedin.com/in/ericbuess" target="_blank">LinkedIn</a></li>
+        `;
+        modalContent.appendChild(socialLinks);
+
+        document.body.appendChild(inUseModal);
+        inUseModal.style.display = "block";
       }
 
       function openShareModal(domainName) {

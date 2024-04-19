@@ -354,6 +354,53 @@ h2 {
   text-align: center;
 }
 
+.modal-content p {
+  margin-bottom: 15px;
+}
+
+.modal-content a {
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #0070C0;
+  text-decoration: none;
+}
+
+.modal-content a:hover {
+  text-decoration: underline;
+}
+
+.modal-content .share-options {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.modal-content .share-options li {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.modal-content .share-options li:last-child {
+  margin-right: 0;
+}
+
+.modal-content .share-options a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #00A0E9;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.modal-content .share-options a:hover {
+  background-color: #0070C0;
+}
+
 .close {
   color: #aaa;
   float: right;
