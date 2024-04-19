@@ -1,58 +1,15 @@
 // script.js
 document.addEventListener("DOMContentLoaded", () => {
   const domainList = document.querySelector(".domain-list");
-  const sortSelect = document.querySelector(".sort-select");
   const searchInput = document.querySelector(".search-input");
-  const tldSection = document.querySelector(".tld-section");
-  const manualTlds = [
-    "ai",
-    "com",
-    "app",
-    "io",
-    "chat",
-    "codes",
-    "technology",
-    "dev",
-    "expert",
-    "consulting",
-    "pro",
-    "tips",
-    "guide",
-    "blog",
-    "news",
-    "cloud",
-    "online",
-    "data",
-    "software",
-    "systems",
-    "engineering",
-    "solutions",
-    "academy",
-    "camp",
-    "courses",
-    "how",
-    "space",
-    "ninja",
-    "run",
-    "observer",
-    "store",
-    "games",
-    "productions",
-    "gallery",
-    "reviews",
-    "university",
-    "builders",
-    "contractors",
-    "online",
-    "solutions",
-    "guru",
-    "studio",
-    "coach",
-    "health",
-  ];
 
   fetch("domains.json")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error fetching domains.json");
+      }
+      return response.json();
+    })
     .then((data) => {
       let domains = data;
 
@@ -136,6 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
           domainCard.appendChild(actionsContainer);
           domainList.appendChild(domainCard);
         });
+
+        updateDomainCount();
       }
 
       function openShareModal(domainName) {
@@ -178,92 +137,254 @@ document.addEventListener("DOMContentLoaded", () => {
         };
       }
 
-      function sortDomains() {
-        const selectedOption = sortSelect.value;
-        if (selectedOption === "price") {
-          domains.sort((a, b) => a.price - b.price);
-        } else if (selectedOption === "name") {
-          domains.sort((a, b) => a.name.localeCompare(b.name));
-        }
-        renderDomainCards();
-      }
-
-      function searchDomains() {
-        const searchTerm = searchInput.value.toLowerCase();
-        domains = data.filter((domain) =>
-          domain.name.toLowerCase().includes(searchTerm)
-        );
-        renderDomainCards();
-      }
-
-      sortSelect.addEventListener("change", sortDomains);
-      searchInput.addEventListener("input", searchDomains);
-
-      const ctaButton = document.querySelector(".cta-button");
-      ctaButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        const featuredDomainsSection =
-          document.getElementById("featured-domains");
-        featuredDomainsSection.scrollIntoView({ behavior: "smooth" });
-      });
-
-      // Read the tlds.txt file and create clickable tags
-      fetch("tlds.txt")
-        .then((response) => response.text())
-        .then((data) => {
-          const tlds = data.split("\n");
-          const tldTags = document.getElementById("tld-tags");
-
-          manualTlds.forEach((tld) => {
-            const tag = document.createElement("span");
-            tag.classList.add("tld-tag");
-            tag.textContent = tld;
-            tag.addEventListener("click", () => {
-              tag.classList.toggle("selected");
-              filterDomains();
-            });
-            tldTags.appendChild(tag);
-          });
-
-          const otherTag = document.createElement("span");
-          otherTag.classList.add("tld-tag");
-          otherTag.textContent = "Other";
-          otherTag.addEventListener("click", () => {
-            otherTag.classList.toggle("selected");
-            filterDomains();
-          });
-          tldTags.appendChild(otherTag);
-        });
       function filterDomains() {
         const searchTerm = searchInput.value.toLowerCase();
-        const selectedTlds = Array.from(
-          document.querySelectorAll(".tld-tag.selected")
-        ).map((tag) => tag.textContent);
-        const isOtherSelected = selectedTlds.includes("Other");
+        const allTags = Array.from(
+          document.querySelectorAll(".search-tag:not(.all):not(.other)")
+        ).map((tag) => tag.textContent.toLowerCase());
 
-        // Adjusting how domains are filtered based on the TLD and search term.
-        domains = data.filter((domain) => {
-          const domainTld = domain.name.split(".").pop(); // Extracts the TLD from the domain name.
-          const isSearchMatch = domain.name.toLowerCase().includes(searchTerm); // Checks if the domain name includes the search term.
+        const isOtherSelected = document
+          .querySelector(".search-tag.other")
+          .classList.contains("selected");
+        let filteredDomains;
 
-          // Determines if the TLD of the domain matches any selected TLD tags, or the 'Other' tag is selected and the TLD is not in manualTlds.
-          const isTldMatch =
-            selectedTlds.length === 0 ||
-            selectedTlds.includes(domainTld) ||
-            (isOtherSelected && !manualTlds.includes(domainTld));
+        if (isOtherSelected) {
+          // If "Other" is selected, filter out domains that match any of the tags
+          filteredDomains = data.filter((domain) => {
+            const domainNameLower = domain.name.toLowerCase();
+            return allTags.every((tag) => !domainNameLower.includes(tag));
+          });
+        } else {
+          // If "Other" is not selected, filter based on selected tags (OR condition)
+          const selectedTags = Array.from(
+            document.querySelectorAll(
+              ".search-tag.selected:not(.all):not(.other)"
+            )
+          ).map((tag) => tag.textContent.toLowerCase());
 
-          return isSearchMatch && isTldMatch;
-        });
+          if (selectedTags.length > 0) {
+            // Include domains that match any of the selected tags
+            filteredDomains = data.filter((domain) => {
+              const domainNameLower = domain.name.toLowerCase();
+              return selectedTags.some((tag) => domainNameLower.includes(tag));
+            });
+          } else {
+            // If no tags are selected, include all domains before the search term filter
+            filteredDomains = data.slice();
+          }
+        }
 
-        renderDomainCards(); // Updates the display of domains.
+        // Apply the search term to the filtered domains list
+        domains = filteredDomains.filter((domain) =>
+          domain.name.toLowerCase().includes(searchTerm)
+        );
 
-        // Optionally, hide or show the TLD section based on the presence of domains.
-        tldSection.style.display = domains.length === 0 ? "none" : "block";
+        renderDomainCards();
+        updateMoreResultsPrompt();
+        updateDomainCount();
       }
 
+      function handleSearchInput() {
+        filterDomains();
+        if (searchInput.value.trim() !== "") {
+          clearSearch.style.display = "block";
+        } else {
+          clearSearch.style.display = "none";
+        }
+      }
+
+      searchInput.addEventListener("input", handleSearchInput);
+
+      const clearSearch = document.querySelector(".clear-search");
+      clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        filterDomains();
+        clearSearch.style.display = "none";
+      });
+
+      const clearSearchTagsLink = document.getElementById("clear-search-tags");
+      clearSearchTagsLink.addEventListener("click", () => {
+        searchInput.value = "";
+        const selectedTags = document.querySelectorAll(".search-tag.selected");
+        selectedTags.forEach((tag) => tag.classList.remove("selected"));
+        const allTag = document.querySelector(".search-tag.all");
+        allTag.classList.add("selected");
+        filterDomains();
+      });
+
+      function updateMoreResultsPrompt() {
+        const moreResultsPrompt = document.getElementById(
+          "more-results-prompt"
+        );
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedTags = Array.from(
+          document.querySelectorAll(".search-tag.selected:not(.all)")
+        );
+
+        if ((searchTerm || selectedTags.length > 0) && domains.length === 0) {
+          moreResultsPrompt.style.display = "block";
+        } else {
+          moreResultsPrompt.style.display = "none";
+        }
+      }
+
+      function updateDomainCount() {
+        const domainCount = document.getElementById("domain-count");
+        domainCount.textContent = `${domains.length} domains found`;
+      }
+
+      function handleTagClick(event) {
+        const clickedTag = event.target;
+        const isAllTag = clickedTag.classList.contains("all");
+        const isOtherTag = clickedTag.classList.contains("other");
+
+        if (isAllTag) {
+          const selectedTags = document.querySelectorAll(
+            ".search-tag.selected"
+          );
+          selectedTags.forEach((tag) => tag.classList.remove("selected"));
+          clickedTag.classList.add("selected");
+        } else if (isOtherTag) {
+          const allTag = document.querySelector(".search-tag.all");
+          const selectedTags = document.querySelectorAll(
+            ".search-tag.selected:not(.other)"
+          );
+          selectedTags.forEach((tag) => tag.classList.remove("selected"));
+          clickedTag.classList.toggle("selected");
+          if (!clickedTag.classList.contains("selected")) {
+            allTag.classList.add("selected");
+          }
+        } else {
+          const allTag = document.querySelector(".search-tag.all");
+          const otherTag = document.querySelector(".search-tag.other");
+          allTag.classList.remove("selected");
+          otherTag.classList.remove("selected");
+          clickedTag.classList.toggle("selected");
+          if (
+            !document.querySelectorAll(
+              ".search-tag.selected:not(.all):not(.other)"
+            ).length
+          ) {
+            allTag.classList.add("selected");
+          }
+        }
+
+        filterDomains();
+      }
+
+      const tagTerms = document.querySelectorAll(".tip-text dt");
+      tagTerms.forEach((term) => {
+        term.addEventListener("click", () => {
+          const tagName = term.textContent.trim().toLowerCase();
+          const correspondingTag = document.querySelector(
+            `.search-tag[data-tag="${tagName}"]`
+          );
+          if (correspondingTag) {
+            searchInput.value = "";
+            const selectedTags = document.querySelectorAll(
+              ".search-tag.selected"
+            );
+            selectedTags.forEach((tag) => tag.classList.remove("selected"));
+            correspondingTag.classList.add("selected");
+            filterDomains();
+            const domainCountContainer = document.querySelector(
+              ".domain-count-container"
+            );
+            domainCountContainer.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+
+      function renderSearchTags() {
+        const searchTags = document.getElementById("search-tags");
+        searchTags.innerHTML = "";
+
+        const allTag = document.createElement("span");
+        allTag.classList.add("search-tag", "all", "selected");
+        allTag.textContent = "All";
+        allTag.addEventListener("click", handleTagClick);
+        searchTags.appendChild(allTag);
+
+        const tags = [
+          { name: "ai" },
+          { name: "asi" },
+          { name: "chat" },
+          { name: "agi" },
+          { name: "gpt" },
+          { name: "agent" },
+          { name: "model" },
+          { name: "voice" },
+          { name: "robot" },
+          { name: "afm" },
+          { name: "fwm" },
+          { name: "lm" },
+          { name: "gen" },
+          { name: "deepfake" },
+          { name: "devin" },
+          { name: "sora" },
+          { name: "suno" },
+          { name: "isaacgym" },
+          { name: "perplexity" },
+          { name: "com" },
+          { name: "app" },
+          { name: "io" },
+          { name: "news" },
+          { name: "codes" },
+          { name: "dev" },
+          { name: "consulting" },
+          { name: "expert" },
+          { name: "pro" },
+          { name: "guru" },
+          { name: "ninja" },
+          { name: "tips" },
+          { name: "guide" },
+          { name: "blog" },
+          { name: "software" },
+          { name: "engineer" },
+          { name: "surgery" },
+          { name: "health" },
+        ];
+
+        tags.forEach((tag) => {
+          const tagElement = document.createElement("span");
+          tagElement.classList.add("search-tag");
+          tagElement.setAttribute("data-tag", tag.name);
+          tagElement.textContent = tag.name;
+          tagElement.addEventListener("click", handleTagClick);
+          searchTags.appendChild(tagElement);
+        });
+
+        const otherTag = document.createElement("span");
+        otherTag.classList.add("search-tag", "other");
+        otherTag.setAttribute("data-tag", "other");
+        otherTag.textContent = "Other";
+        otherTag.addEventListener("click", handleTagClick);
+        searchTags.appendChild(otherTag);
+      }
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      const scrollToTopButton = document.getElementById("scroll-to-top");
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 100) {
+          scrollToTopButton.style.display = "block";
+        } else {
+          scrollToTopButton.style.display = "none";
+        }
+      });
+      scrollToTopButton.addEventListener("click", scrollToTop);
+      searchInput.addEventListener("input", filterDomains);
+
+      renderSearchTags();
       renderDomainCards();
     })
     .catch((error) => {
-      console.log("Error fetching domain data:", error);
+      console.error("Error fetching domain data:", error);
+      // Handle the error, display a message to the user, etc.
     });
 });

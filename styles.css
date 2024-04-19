@@ -20,6 +20,7 @@ header {
   color: #FFFFFF;
 }
 
+
 h1 {
   font-size: 28px;
   margin-bottom: 10px;
@@ -30,13 +31,13 @@ h1 a {
   text-decoration: none;
 }
 
-section {
-  margin-bottom: 20px;
-}
-
 p {
   font-size: 18px;
   line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+section {
   margin-bottom: 10px;
 }
 
@@ -65,17 +66,135 @@ p {
 
 h2 {
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.sort-select,
-.search-input {
+.search-container {
+  position: relative;
   margin-bottom: 20px;
+}
+
+.clear-search {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  display: none;
+}
+
+.search-input {
+  width: 100%;
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
+
+.tip-container {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.tip-icon {
+  font-size: 18px;
+  margin-right: 5px;
+  color: #666;
+}
+
+.tip-text {
+  color: #666;
+}
+
+.tip-text ul {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.tip-text dl {
+  margin-top: 10px;
+  margin-left: 20px;
+  }
+  
+  .tip-text dt {
+    font-weight: bold;
+    display: inline;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .tip-text dd {
+    display: inline;
+    margin-right: 15px;
+  }
+  
+  .tip-text dl div {
+    margin-bottom: 5px;
+  }
+
+.tag-container {
+  margin-bottom: 20px;
+}
+
+.search-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.search-tag {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.search-tag.selected {
+  background-color: #0070C0;
+  color: #FFFFFF;
+}
+
+.search-tag.other {
+  background-color: #e0e0e0;
+  margin-left: 8px;
+  position: relative;
+}
+
+.search-tag.other::before {
+  content: "|";
+  position: absolute;
+  left: -15px;
+  color: #999;
+}
+
+.search-tag.other.selected {
+  background-color: #0070C0;
+  color: #FFFFFF;
+  }
+
+  .more-results-prompt {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ffdddd;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    display: none;
+  }
+  
+  .more-results-prompt a {
+    color: #0070C0;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
 .filter-sort {
   display: flex;
@@ -131,6 +250,16 @@ h2 {
 
 .actions-container {
   margin-top: auto;  /* This pushes the container to the bottom */
+}
+
+.domain-count-container {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .domain-name {
@@ -298,4 +427,47 @@ h2 {
 
 #copy-link:hover {
   background-color: #00A0E9;
+}
+
+footer {
+  background-color: #f0f0f0;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+footer h3 {
+  margin-bottom: 20px;
+}
+
+footer ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+footer li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+footer a {
+  color: #0070C0;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+#scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #0070C0;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: none;
 }
