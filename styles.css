@@ -183,11 +183,10 @@ h2 {
   .more-results-prompt {
     margin-top: 20px;
     padding: 15px;
-    background-color: #ffdddd;
+    background-color: #e0f0ff;
     border-radius: 5px;
     text-align: center;
     font-size: 16px;
-    display: none;
   }
   
   .more-results-prompt a {
@@ -431,8 +430,37 @@ h2 {
 
 footer {
   background-color: #f0f0f0;
-  padding: 40px 20px;
+  padding: 20px;
   text-align: center;
+}
+
+footer p {
+  margin-bottom: 10px;
+}
+
+.social-links {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.social-links li {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.social-links li:last-child {
+  margin-right: 0;
+}
+
+.social-links i {
+  font-size: 24px;
+  color: #333;
+}
+
+.social-links i:hover {
+  color: #0070C0;
 }
 
 footer h3 {

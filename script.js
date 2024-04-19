@@ -182,6 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderDomainCards();
         updateMoreResultsPrompt();
         updateDomainCount();
+        updateMoreResultsPrompt();
       }
 
       function handleSearchInput() {
@@ -203,13 +204,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const clearSearchTagsLink = document.getElementById("clear-search-tags");
-      clearSearchTagsLink.addEventListener("click", () => {
+      clearSearchTagsLink.addEventListener("click", (event) => {
+        event.preventDefault();
         searchInput.value = "";
         const selectedTags = document.querySelectorAll(".search-tag.selected");
         selectedTags.forEach((tag) => tag.classList.remove("selected"));
         const allTag = document.querySelector(".search-tag.all");
         allTag.classList.add("selected");
         filterDomains();
+        const tagContainer = document.querySelector(".tag-container");
+        tagContainer.scrollIntoView({ behavior: "smooth" });
+        clearSearch.style.display = "none";
       });
 
       function updateMoreResultsPrompt() {
@@ -217,11 +222,9 @@ document.addEventListener("DOMContentLoaded", () => {
           "more-results-prompt"
         );
         const searchTerm = searchInput.value.toLowerCase();
-        const selectedTags = Array.from(
-          document.querySelectorAll(".search-tag.selected:not(.all)")
-        );
+        const allTag = document.querySelector(".search-tag.all");
 
-        if ((searchTerm || selectedTags.length > 0) && domains.length === 0) {
+        if (searchTerm || !allTag.classList.contains("selected")) {
           moreResultsPrompt.style.display = "block";
         } else {
           moreResultsPrompt.style.display = "none";
@@ -287,10 +290,8 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedTags.forEach((tag) => tag.classList.remove("selected"));
             correspondingTag.classList.add("selected");
             filterDomains();
-            const domainCountContainer = document.querySelector(
-              ".domain-count-container"
-            );
-            domainCountContainer.scrollIntoView({ behavior: "smooth" });
+            const tagContainer = document.querySelector(".tag-container");
+            tagContainer.scrollIntoView({ behavior: "smooth" });
           }
         });
       });
@@ -329,9 +330,9 @@ document.addEventListener("DOMContentLoaded", () => {
           { name: "app" },
           { name: "io" },
           { name: "news" },
-          { name: "codes" },
+          { name: "code" },
           { name: "dev" },
-          { name: "consulting" },
+          { name: "consult" },
           { name: "expert" },
           { name: "pro" },
           { name: "guru" },
@@ -360,6 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
         otherTag.textContent = "Other";
         otherTag.addEventListener("click", handleTagClick);
         searchTags.appendChild(otherTag);
+        updateMoreResultsPrompt();
       }
 
       function scrollToTop() {
