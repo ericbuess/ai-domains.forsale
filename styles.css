@@ -294,6 +294,25 @@ h2 {
   margin-bottom: 10px;
 }
 
+/* Button and Link Standardization */
+.button-link {
+  display: inline-block;
+  padding: 8px 16px; /* Standardize padding */
+  font-size: 16px; /* Standardize font size */
+  background-color: #0070C0; /* Primary button color */
+  color: #FFFFFF;
+  text-decoration: none;
+  border: none; /* Removes border for buttons */
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  vertical-align: middle; /* Ensures that all elements line up correctly */
+}
+
+.button-link:hover {
+  background-color: #00A0E9; /* Hover state */
+}
+
 .buy-now-link,
 .make-offer-link {
   display: inline-block;

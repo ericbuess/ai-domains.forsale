@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Buy Now link
           const buyNowLink = document.createElement("a");
           buyNowLink.classList.add("buy-now-link");
+          buyNowLink.classList.add("button-link");
           buyNowLink.href = `https://${domain.name}`;
           buyNowLink.target = "_blank";
           buyNowLink.textContent = "Buy Now";
@@ -81,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (domain.minOffer) {
             const makeOfferLink = document.createElement("a");
             makeOfferLink.classList.add("make-offer-link");
+            makeOfferLink.classList.add("button-link");
             makeOfferLink.href = `https://${domain.name}`;
             makeOfferLink.target = "_blank";
             makeOfferLink.textContent = "Make an Offer";
@@ -96,6 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
           // Share button
           const shareButton = document.createElement("button");
           shareButton.classList.add("share-button");
+          shareButton.classList.add("button-link");
+
           shareButton.textContent = "Share";
           shareButton.addEventListener("click", () => {
             openShareModal(domain.name);
