@@ -126,21 +126,22 @@ document.addEventListener("DOMContentLoaded", () => {
         modalContent.appendChild(closeButton);
 
         const heading = document.createElement("h3");
-        heading.textContent = "Domain In Use";
+        heading.textContent = "Domain In Use But Available";
         modalContent.appendChild(heading);
 
         const message = document.createElement("p");
-        message.textContent = `The domain ${domainName} is currently in use but is available for purchase. Please reach out using the links below if you are interested in purchasing this domain.`;
+        message.textContent = `The domain ${domainName} is currently in use but is available for purchase.`;
         modalContent.appendChild(message);
 
         const domainLink = document.createElement("a");
         domainLink.href = `https://${domainName}`;
         domainLink.target = "_blank";
-        domainLink.textContent = "Visit Domain";
+        domainLink.textContent = `Visit ${domainName}`;
         modalContent.appendChild(domainLink);
 
         const socialLinksHeading = document.createElement("p");
-        socialLinksHeading.textContent = "Reach out on:";
+        socialLinksHeading.textContent =
+          "If you are interested in purchasing this domain please reach out on one of the social links below and let us know. We'll make it available for purchase.";
         modalContent.appendChild(socialLinksHeading);
 
         const socialLinks = document.createElement("ul");
