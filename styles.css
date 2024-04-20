@@ -14,7 +14,7 @@ body {
 }
 
 header {
-  background-color: #0070C0;
+  background-color: #004891;
   padding: 20px;
   text-align: center;
   color: #FFFFFF;
@@ -44,7 +44,7 @@ section {
 .cta-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #00A0E9;
+  background-color: #007AC3;
   color: #FFFFFF;
   text-decoration: none;
   font-size: 20px;
@@ -53,7 +53,7 @@ section {
 }
 
 .cta-button:hover {
-  background-color: #0070C0;
+  background-color: #004891;
 }
 
 .container {
@@ -158,7 +158,7 @@ h2 {
 }
 
 .search-tag.selected {
-  background-color: #0070C0;
+  background-color: #004891;
   color: #FFFFFF;
 }
 
@@ -176,7 +176,7 @@ h2 {
 }
 
 .search-tag.other.selected {
-  background-color: #0070C0;
+  background-color: #004891;
   color: #FFFFFF;
   }
 
@@ -190,7 +190,7 @@ h2 {
   }
   
   .more-results-prompt a {
-    color: #0070C0;
+    color: #004891;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -226,7 +226,7 @@ h2 {
 }
 
 .tld-tag.selected {
-  background-color: #0070C0;
+  background-color: #004891;
   color: #FFFFFF;
 }
 
@@ -278,18 +278,18 @@ h2 {
 
 .original-price {
   text-decoration: line-through;
-  color: #999;
+  color: #555; /* Darker gray for better contrast */
   font-size: 16px;
 }
 
 .current-price {
-  color: #0070C0;
+  color: #004891;
   font-size: 18px;
 }
 
 .domain-price {
   font-size: 18px;
-  color: #0070C0;
+  color: #004891;
   margin-bottom: 10px;
 }
 
@@ -303,7 +303,7 @@ h2 {
   display: inline-block;
   padding: 8px 16px; /* Standardize padding */
   font-size: 16px; /* Standardize font size */
-  background-color: #0070C0; /* Primary button color */
+  background-color: #004891; /* Primary button color */
   color: #FFFFFF;
   text-decoration: none;
   border: none; /* Removes border for buttons */
@@ -314,14 +314,14 @@ h2 {
 }
 
 .button-link:hover {
-  background-color: #00A0E9; /* Hover state */
+  background-color: #056fa1; /* Hover state */
 }
 
 .buy-now-link,
 .make-offer-link {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #0070C0;
+  background-color: #004891;
   color: #FFFFFF;
   text-decoration: none;
   border-radius: 5px;
@@ -330,13 +330,13 @@ h2 {
 
 .buy-now-link:hover,
 .make-offer-link:hover {
-  background-color: #00A0E9;
+  background-color: #007AC3;
 }
 
 .share-button {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #00A0E9;
+  background-color: #007AC3;
   color: #FFFFFF;
   text-decoration: none;
   border-radius: 5px;
@@ -345,7 +345,7 @@ h2 {
 }
 
 .share-button:hover {
-  background-color: #0070C0;
+  background-color: #004891;
 }
 
 .modal {
@@ -384,7 +384,7 @@ h2 {
   display: block;
   text-align: center;
   margin-bottom: 20px;
-  color: #0070C0;
+  color: #004891;
   text-decoration: none;
 }
 
@@ -411,7 +411,7 @@ h2 {
 .modal-content .share-options a {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #00A0E9;
+  background-color: #007AC3;
   color: #FFFFFF;
   text-decoration: none;
   border-radius: 5px;
@@ -420,7 +420,7 @@ h2 {
 }
 
 .modal-content .share-options a:hover {
-  background-color: #0070C0;
+  background-color: #004891;
 }
 
 .close {
@@ -457,7 +457,7 @@ h2 {
 .share-options a {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #00A0E9;
+  background-color: #007AC3;
   color: #FFFFFF;
   text-decoration: none;
   border-radius: 5px;
@@ -466,7 +466,7 @@ h2 {
 }
 
 .share-options a:hover {
-  background-color: #0070C0;
+  background-color: #004891;
 }
 
 #share-link {
@@ -483,7 +483,7 @@ h2 {
   display: block;
   width: 100%;
   padding: 12px;
-  background-color: #0070C0;
+  background-color: #004891;
   color: #FFFFFF;
   text-decoration: none;
   border: none;
@@ -494,7 +494,7 @@ h2 {
 }
 
 #copy-link:hover {
-  background-color: #00A0E9;
+  background-color: #007AC3;
 }
 
 footer {
@@ -529,7 +529,7 @@ footer p {
 }
 
 .social-links i:hover {
-  color: #0070C0;
+  color: #004891;
 }
 
 footer h3 {
@@ -547,7 +547,7 @@ footer li {
 }
 
 footer a {
-  color: #0070C0;
+  color: #004891;
   text-decoration: none;
   font-size: 18px;
 }
@@ -561,7 +561,7 @@ footer a:hover {
   bottom: 20px;
   right: 20px;
   padding: 10px 20px;
-  background-color: #0070C0;
+  background-color: #004891;
   color: #FFFFFF;
   border: none;
   border-radius: 5px;
