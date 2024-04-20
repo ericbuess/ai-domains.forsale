@@ -167,8 +167,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const shareUrl = `https://${domainName}`;
         const encodedShareUrl = encodeURIComponent(shareUrl);
+        const saleLink = "https://ai-domains.forsale";
+        // const encodedSaleLink = encodeURIComponent(saleLink);
         const shareText = encodeURIComponent(
-          "Check out this AI domain for sale: "
+          `Check out this AI domain for sale at a massive discount on ${saleLink}!`
         );
 
         shareTwitter.href = `https://twitter.com/intent/tweet?text=${shareText}&url=${encodedShareUrl}`;
