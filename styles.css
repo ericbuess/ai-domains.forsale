@@ -248,7 +248,11 @@ h2 {
 }
 
 .actions-container {
-  margin-top: auto;  /* This pushes the container to the bottom */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
 }
 
 .domain-count-container {
@@ -317,7 +321,6 @@ h2 {
 .make-offer-link {
   display: inline-block;
   padding: 8px 16px;
-  margin-right: 10px;
   background-color: #0070C0;
   color: #FFFFFF;
   text-decoration: none;
