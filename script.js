@@ -403,6 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
           { name: "ninja" },
           { name: "tips" },
           { name: "guide" },
+          { name: "domain" },
           { name: "blog" },
           { name: "software" },
           { name: "engineer" },
